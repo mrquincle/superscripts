@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#if [[ "$1" == "" ]]
+#then
+#	echo "No argument supplied."
+#fi
+MASK=$1
+
+if [[ "$MASK" == "" ]]; then
+	ls -lAtr | tail -n 1 | cut -d ':' -f 2 | cut -d ' ' -f 2
+else
+	ls -lAtr | grep $MASK | tail -n 1 | cut -d ':' -f 2 | cut -d ' ' -f 2
+fi

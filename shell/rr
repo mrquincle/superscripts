@@ -1,0 +1,3 @@
+#!/bin/bash
+
+resize -s 40 180 > /dev/null

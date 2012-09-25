@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Check if we have a proper argument
+if [[ "$1" == "" ]]
+then
+	echo "No args supplied! Run $0 -h for more info"
+	exit 1
+fi
+
+# Provide help
+if [[ "$1" == "-h" ]]
+then
+	echo "Format $0 ARG will execute \"meld $1.THIS $1.OTHER\""
+	exit 1
+fi
+
+# Should check if files exist
+
+meld $1.THIS $1.OTHER
+

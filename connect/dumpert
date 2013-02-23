@@ -1,0 +1,23 @@
+#!/bin/bash
+
+file=$(zenity --entry --text "Please, enter the URL to show movie:" --title "Show movie")
+
+if [ $? == 0 ]; then
+#	file=$1
+
+	tmp_file=temp.html
+	key="data-vidurl"
+
+	search_for='div class="video"'
+
+	wget $file -O $tmp_file -o /dev/null
+
+	line=$(< $tmp_file grep "$search_for")
+
+	movie=$(echo $line | grep -o "$key=[^ ,]\+" | cut -d'=' -f2 | tr -d '"')
+
+	echo "Open $movie"
+	vlc $movie
+
+fi
+

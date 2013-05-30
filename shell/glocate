@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Search for key $1 in files that have in their name $2
+search_key=${1:? "$0 requires search key as first argument"}
+search_file=${2:? "$0 requires search file mask as second argument"}
+
+grep -n -H "$search_key" $(locate "$search_file")

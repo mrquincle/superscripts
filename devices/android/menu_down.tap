@@ -1,0 +1,1 @@
+adb shell input swipe 700 30 700 1250

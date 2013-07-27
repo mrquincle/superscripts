@@ -29,4 +29,8 @@ sleep 3
 echo "Click to share recognized song on twitter"
 adb shell input tap 600 120
 
+sleep 20
+
+echo "Kill SoundHound"
+adb shell am force-stop com.melodis.midomiMusicIdentifier.freemium
 

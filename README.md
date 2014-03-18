@@ -28,6 +28,18 @@ And of course its length:
 
     array_length=${#array[@]}
 
+Disable globbing:
+
+    shopt -s nullglob
+
+Remove comma from last line in file:
+
+    sed -i -e '$s|,||' "$file"
+
+Split a file based on context lines (for example a json array):
+
+    csplit -s -n6 -f "$file" '/metadata/-1' '{*}'
+
 ## Copyrights
 The copyrights (2014) belong to:
 

@@ -12,8 +12,8 @@ To require an argument:
     file=${1:? "$0 requires \"file\" as first argument"}
 
 ## Copyrights
-The copyrights (2012) belong to:
+The copyrights (2014) belong to:
 
 - Author: Anne van Rossum
-- Almende B.V., http://www.almende.com and DO bots B.V., http://www.dobots.nl
+- Almende B.V., http://www.almende.com and DoBots B.V., http://www.dobots.nl
 - Rotterdam, The Netherlands

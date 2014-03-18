@@ -3,6 +3,14 @@
 # Superscripts
 A bunch of scripts for all kind of purposes... :-)
 
+## Thing I like
+
+These are just .sh or .bash scripts, but also such scripts have many little tricks you only learn over times.
+
+To require an argument:
+
+    file=${1:? "$0 requires \"file\" as first argument"}
+
 ## Copyrights
 The copyrights (2012) belong to:
 

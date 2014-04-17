@@ -6,3 +6,7 @@ sudo ifconfig eth0 192.168.111.11
 
 # Telnet to 192.168.111.23
 telnet robo40
+
+# Stream over 12347
+# nc robo40 12347
+

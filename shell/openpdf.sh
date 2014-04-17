@@ -1,6 +1,9 @@
 #!/bin/bash
 
-path=$HOME/setup
+set -e
+
+path=${1:? "$0 requires path as argument"}
+
 flags="--format %f"
 while true; do
 	download=$(inotifywait $flags -e close_write $path)
@@ -13,6 +16,6 @@ while true; do
 	mime=$(file -b --mime-type "$file")
 	if [ "$mime" = "application/pdf" ]; then
 		echo "Open $file"
-		acroread "$file"
+		acroread "$file" &
 	fi
 done

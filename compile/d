@@ -8,13 +8,14 @@ then
 	exit 1
 fi
 
-# Set up a command file for gdb so you won't need to type backtrace and quit, but directly run 
-# gdb without user interaction
-mkdir -p ~/temp
-echo 'run' > ~/temp/gdb.cmds; echo 'bt' >> ~/temp/gdb.cmds; echo 'quit' >> ~/temp/gdb.cmds;
+TEMPDIR=~/tmp
+
+# Set up a command file for gdb so you won't need to type backtrace and quit, but directly run gdb without user interaction
+mkdir -p $TEMPDIR
+echo 'run' > $TEMPDIR/gdb.cmds; echo 'bt' >> $TEMPDIR/gdb.cmds; echo 'quit' >> $TEMPDIR/gdb.cmds;
 
 # The gdb command syntax
-RUN="gdb -x ~/temp/gdb.cmds --args "
+RUN="gdb -x $TEMPDIR/gdb.cmds --args "
 
 # Run it through gdb with all arguments
 $RUN $@

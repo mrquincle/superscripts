@@ -40,6 +40,10 @@ Split a file based on context lines (for example a json array):
 
     csplit -s -n6 -f "$file" '/metadata/-1' '{*}'
 
+Json manipulations, use underscore-cli, say input is `input.json` and we want to get the field items and then snippet:
+
+    < input.json underscore select '.items .snippet' > result.json
+
 ## Copyrights
 The copyrights (2014) belong to:
 

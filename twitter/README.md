@@ -6,9 +6,9 @@ The scripts in this folder are meant to obtain data from twitter and other publi
 
 The file `twitter.config`, has several fields that can be set.
 
-A search term for twitter, here %23 is the hash-symbol:
+A search term for twitter:
 
-    term=%23endomondo
+    term=#endomondo
 
 Localisation is possible by limiting the search to a location (lat, long) and a certain range:
 

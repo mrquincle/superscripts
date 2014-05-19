@@ -4,6 +4,7 @@
 #  npm install -g underscore-cli
 #  npm install -g jsontools
 
+# We create a new folder for our data, we subsequently run several scripts with this folder as an argument
 folder_name="Search $(date)"
 
 echo "$folder_name" >> dirs.txt

@@ -36,10 +36,11 @@ for f in $files; do
 	geo=$(< "$f" underscore extract coordinates.coordinates | tr -d '[' | tr -d ']' | tr -d ' ')
 	long=$(echo $geo | cut -f1 -d',')
 	lat=$(echo $geo | cut -f2 -d',')
-	#echo "curl -s http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&units=metric"
-	echo "curl -s http://api.openweathermap.org/data/2.5/history/weather?lat=$lat&lon=$long&units=metric&type=hour&start=$unixtime&cnt=1"
+	# The following is not possible, "history" is only provided for "city" and "station".
+	# "curl -s http://api.openweathermap.org/data/2.5/history/weather?lat=$lat&lon=$long&units=metric"
+	echo "curl -s http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&units=metric&type=hour&start=$unixtime&cnt=1"
 	
-	curl -s "http://api.openweathermap.org/data/2.5/history/weather?lat=$lat&lon=$long&units=metric&type=hour&start=$unixtime&cnt=1" -o /tmp/weather.log
+	curl -s "http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&units=metric&type=hour&start=$unixtime&cnt=1" -o /tmp/weather.log
 	file="Weather ${f##*/}"
 	< /tmp/weather.log underscore print > "$file"
 done

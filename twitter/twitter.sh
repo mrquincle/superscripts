@@ -11,19 +11,14 @@
 
 subdir="${1:? '$0 requires subdir as argument'}"
 
-# the %23 is the # token
-term=%23endomondo
-
-# currently, we limit our search to a specific geocode lat long is 51.908868,4.479621 with radius of 200km
-geocode=51.908868,4.479621,200km
+source twitter.config
 
 # the given subdir is in reference to the following workpath: /data/tweets
-dir="/data/tweets"
-mkdir -p "$dir/$subdir"
-filename="$dir/$subdir/Tweets $term $(date)"
+mkdir -p "$data_dir/$subdir"
+filename="$data_dir/$subdir/Tweets $term $(date)"
 
-touch "$dir/since_id"
-source "$dir/since_id"
+touch "$data_dir/since_id"
+source "$data_dir/since_id"
 
 if [ $since_id ]; then
 	restrictions="&since_id=$since_id";
@@ -48,5 +43,5 @@ echo "You can find the (pretty printed) tweets in $filename.pretty.log"
 since_id=$(cat "$filename.pretty.log" | tail -n12 | grep "refresh_url" | cut -f2 -d'=' | cut -f1 -d'&')
 
 echo "Next time only searches with since_id=$since_id"
-echo "since_id=$since_id" > "$dir/since_id"
+echo "since_id=$since_id" > "$data_dir/since_id"
 

@@ -18,7 +18,7 @@ Now, you can visit each profile url. However, you can also use the second script
 
 ## Visit their website
 
-Now, you will still need to visit the website of each and individual backer. This is not automated.
+Now, you will still need to visit the website of each and individual backer. This is not automated. What you can use is the `visit_urls.sh` script, which will open a subset of backers in `google-chrome`.
 
 Good luck to you if you are willing to do this! Of course, be nice to each individual and send them a personal message. You have already spend so much time now to get to their website, you might as well treat them as kings and queens.
 

@@ -2,7 +2,7 @@
 
 sensor=${1:? "Usage: $0 sensor_id"}
 
-start=100000
+start=1
 
 echo "Only get first 100000 pages"
 end=$(( $start + 100000 ))

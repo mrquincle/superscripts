@@ -1,0 +1,5 @@
+#!/bin/sh
+
+temperature=${1:? "Usage $0 temperature"}
+
+cd $HOME/workspace/EQ3-Thermostat && ./eq3_settemp.py $temperature

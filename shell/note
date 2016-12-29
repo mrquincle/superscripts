@@ -1,0 +1,59 @@
+#!/bin/bash
+
+text=${1:? "Usage: [@channel] string"}
+
+declare -A options
+
+arg1=$(IFS=" " ; set -- $text ; echo $1)
+token=${arg1:0:1}
+if [ "$token" == "@" ]; then
+	channel=${arg1:1}
+	text=${2:? "Usage: @channel string"}
+else
+	channel=log
+fi
+
+options['help']='List options'
+options['more-help']='List options and their descriptions'
+options['update']='Update this script'
+options['edit']='Edit the notes'
+options['list']='Show list'
+options['goto-logs']='Go to log path'
+options['goto-script']='Go to script path'
+
+opath=$HOME/.notes
+ofile=${channel}.txt
+
+mkdir -p $opath
+
+case "$text" in
+'help') 
+	echo "Options: ${!options[@]}"
+	echo "See option 'more-help' for more verbose descriptions"
+	;;
+'more-help')
+	for key in ${!options[@]}; do
+		echo -e "${key} \t ${options[${key}]}"
+	done | column -ts $'\t'
+	;;
+'update') 
+	script=$(which $0) 
+	vim "$script" 
+	;;
+'goto-script') 
+	script=$(which $0) 
+	sh -c "cd ${script%/*}; ls -latr $script; exec ${SHELL:-sh}" 
+	;;
+'edit')
+	vim $opath/$ofile
+	;;
+'goto-logs')
+	sh -c "cd $opath; exec ${SHELL:-sh}" 
+	;;
+'list') 
+	cat $opath/$ofile
+	;;
+*)
+	echo "$text" | tee -a $opath/$ofile
+	;;
+esac

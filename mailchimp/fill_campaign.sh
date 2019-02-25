@@ -1,0 +1,1 @@
+../../mailchimp/fill_campaign.sh

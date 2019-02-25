@@ -1,0 +1,1 @@
+../../mailchimp/create_campaign.sh

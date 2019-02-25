@@ -1,1 +1,227 @@
-../../mailchimp/mailchimp-template.html
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		body {
+			margin                  : 0px;
+			background-color        : #ffffff;
+			padding                 : 0px;
+		}
+
+		container {
+			-ms-text-size-adjust    : 100%;
+			-webkit-text-size-adjust: 100%;
+			background-color        : #ffffff;
+			width                   : 100%;
+			table-layout            : fixed;
+		}
+
+		box {
+			margin-top              : 0;
+			margin-right            : auto;
+			margin-bottom           : 0;
+			margin-left             : auto;
+			background-color        : #ffffff;
+			max-width               : 600px;
+		}
+
+		table.table {
+			align-content           : center;
+			margin                  : 0 auto;
+			border-spacing          : 0px;
+			background-color        : #ffffff;
+			width                   : 100%;
+			max-width               : 600px;
+			height                  : 100%;
+			color                   : #333333;
+			font-family             : 'Lato', sans-serif;
+		}
+
+		table.table td {
+			background-color        :#ffffff;
+			padding                 : 0;
+		}
+
+		table.table td.logo_top {
+			padding-left            : 500px;
+			height                  : 120px;
+
+		}
+
+		table.table td.logo_top img {
+			border-width            : 0px;
+			width                   : 70px;
+			height                  : 60px;
+		}
+
+		table.email-body {
+			border-spacing          : 0px;
+			width                   : 100%;
+		}
+
+		table.email-body td {
+			padding-top             : 15px;
+			padding-right           : 30px;
+			padding-bottom          : 15px;
+			padding-left            : 30px;
+			text-align              : left;
+		}
+
+		table.email-body td h1 {
+			margin                  : 0px;
+			margin-bottom           : 26px;
+			font-family             : 'Lato', sans-serif;
+			font-size               : 30px;
+			font-weight             : 100;
+			text-align              : center;
+			color                   : #003e52;
+		}
+
+		table.email-body td p,
+		table.email-body td ol,
+		table.email-body td ul {
+			margin                  : 0;
+			margin-right            : auto;
+			margin-bottom           : 10px;
+			margin-left             : auto;
+			color                   : #a1a8ad;
+			font-family             : 'Lato', sans-serif;
+			font-size               : 15px;
+			line-height             : 20px;
+			text-align              : left;
+		}
+
+		table.email-body td p a,
+		table.email-body td ol a,
+		table.email-body td ul a {
+			color                   : #003e52;
+		}
+
+		table.footer {
+			margin-right            : auto;
+			margin-left             : auto;
+			padding-top             : 15%;
+			padding-right           : 30px;
+			padding-bottom          : 2%;
+			padding-left            : 30px;
+			text-align              : center;
+		}
+
+		table.footer p {
+			margin                  : 0;
+			margin-right            : auto;
+			margin-left             : auto;
+			color                   : #a1a8ad;
+			font-family             : 'Lato', sans-serif;
+			font-size               : 10px;
+			line-height             : 12px;
+			text-align              : left;
+		}
+
+		table.footer td {
+		    padding-left : 30px;
+		}
+
+		.small_text {
+			color                   : #a1a8ad;
+			font-family             : 'Lato', sans-serif;
+			font-size               : 12px;
+		}
+
+		.myButton {
+		    display                 : inline-block;
+		    cursor                  : pointer;
+		    margin-bottom           : 20px;
+		    border                  : 1px solid #003e52;
+		    border-radius           : 25px;
+		    background-color        : #003e52;
+		    padding                 : 15px 50px;
+		    width                   : 100px;
+		    height                  : 20px;
+		    line-height             : 20px !important;
+		    color                   : #ffffff !important;
+		    font-family             : 'Lato', sans-serif;
+		    font-size               : 17px;
+		    text-decoration         : none;
+		    text-shadow             : 0px 1px 0px #003e52;
+		}
+
+		.myButton:hover {
+			background-color        : #002936;
+			color                   : #ffffff !important;
+		}
+
+		.myButton:active {
+			position                : relative;
+			background-color        : #003546;
+			color                   : #ffffff !important;
+			border                  : 1px solid #FFFFFF;
+		}
+	</style>
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i,900,900i" rel="stylesheet">
+	<title>You have been invited to Crownstone!</title>
+</head>
+<body>
+    <div class ="container">
+	<div style="display:none">Crownstone
+	</div>
+	<div class ="box">
+	    <table class="table">
+		<tbody>
+		    <!-- Logo -->
+		    <tr>
+			<td class="logo_top">
+			    <div style="text-align: right;"><img data-file-id="2092589" height="200" src="https://gallery.mailchimp.com/d03baf337210e326a61dc14d5/images/de449fde-af6c-46a7-aa05-43fd507ca34c.png" style="border: 0px  ; width: 200px; height: 200px; margin: 0px;" width="200" /></div>
+			</td>
+		    </tr>
+		    <!-- Start of Email Body-->
+		    <tr>
+			<td>
+			    <table class="email-body">
+				<tr>
+				    <td>
+					{{ contents }}
+				    </td>
+				</tr>
+			    </table>
+			</td>
+		    </tr>
+		    <!-- Footer -->
+		    <tr>
+			<td>
+			    <div style="text-align: center; padding-top:20px">
+				<img align="none" height="106" src="https://gallery.mailchimp.com/d03baf337210e326a61dc14d5/images/007100b8-a039-4fcc-99b2-a356be2e5342.png" style="width: 106px; height: 106px; margin: 0px;" width="106" /> 
+				<img align="none" height="106" src="https://gallery.mailchimp.com/d03baf337210e326a61dc14d5/images/23a16023-a192-472e-97ba-08a6a89c93f8.png" style="width: 106px; height: 106px; margin: 0px;" width="106" /> 
+				<img align="none" height="105" src="https://gallery.mailchimp.com/d03baf337210e326a61dc14d5/images/c5565f10-c93f-40a8-9e45-a5f6b245add6.png" style="width: 106px; height: 105px; margin: 0px;" width="106" /> 
+				<img align="none" height="106" src="https://gallery.mailchimp.com/d03baf337210e326a61dc14d5/images/60c271cd-6446-4b45-bdd7-3c4f48220296.png" style="width: 106px; height: 106px; margin: 0px;" width="106" />
+			    </div>
+			    <table class="footer" style="padding: 20px 20px 0px 20px; width:80%; margin: 0 auto">
+				<tr>
+				    <td style="width:50%">
+					<div>
+					    <p class="description">
+					    For our new list members, yes, can buy the Crownstones at <a href="https://shop.crownstone.rocks" target="_blank">https://shop.crownstone.rocks</a>!
+					    <br />
+					    <br />
+					    We also love your feedback at <a href="https://twitter.com/CrownstoneRocks" target="_blank">Twitter</a>, <a href="http://facebook.com/crownstones" target="_blank">Facebook</a>, <a href="https://www.linkedin.com/company/crownstone" target="_blank">LinkedIn</a>, <a href="https://crownstone.rocks/forum/" target="_blank">Forum</a>. or on our <a href="https://trello.com/b/6rUcIt62/crownstone-transparent-product-roadmap" target="_blank">Roadmap</a>. 
+					    If you have particular issues or feature requests, drop them at <a href="https://github.com/crownstone/" target="_blank">GitHub</a>.
+					    </p>
+					</div>
+				    </td>
+				    <td style="width:50%">
+					<div>
+					    <p class="description">
+					    <img align="none" height="133" src="https://gallery.mailchimp.com/d03baf337210e326a61dc14d5/images/444fe106-a4fa-49c2-9d89-26128f6494a8.jpg" style="width: 200px; height: 133px; margin: 0px;" width="200" />
+					    </p>
+					</div>
+				    </td>
+				</tr>
+			    </table>
+			</td>
+		    </tr>
+		</tbody>
+	    </table>
+	</div>
+    </div>
+</body>

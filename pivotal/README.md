@@ -19,7 +19,7 @@ Usage:
 
 Here you find an example of a recent board planning (no secrets spilled here):
 
-![img/board.png](Example of a board)
+![Example of a board](img/board.png)
 
 You can read more at:
 

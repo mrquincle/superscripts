@@ -36,7 +36,7 @@ extract() {
 	cat tmp/result.json | jq -r "$jq_query" | tr '[]' '{}' >> $ofile
 }
 
-jq_query='.[].stories[] | select(.current_state=="unstarted") | [.name, .owner_ids] | "\(.[0]) \(.[1])"'
+jq_query='.[].stories[] | select((.current_state=="unstarted") or (.current_state=="planned")) | [.name, .owner_ids] | "\(.[0]) \(.[1])"'
 ofile=tmp/stage1.txt
 ocolor=${red}
 label="To Do"
@@ -50,7 +50,7 @@ label="Doing"
 
 extract
 
-jq_query='.[].stories[] | select(.current_state=="delivered") | [.name, .owner_ids] | "\(.[0]) \(.[1])"'
+jq_query='.[].stories[] | select((.current_state=="delivered") or (.current_state=="accepted")) | [.name, .owner_ids] | "\(.[0]) \(.[1])"'
 ofile=tmp/stage3.txt
 ocolor=${green}
 label="Done"

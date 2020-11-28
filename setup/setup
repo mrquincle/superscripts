@@ -1,0 +1,82 @@
+#!/bin/sh
+
+usage="Usage: $0 <action> <name> [method] <package>"
+
+action=${1:? "$usage"}
+
+name=${2:? "$usage"}
+
+mkdir -p ~/.setup
+logfile=~/.setup/log
+
+if [ "$#" -eq 3 ]; then
+	package=${3:? "$usage"}
+
+	file=${package##*/}
+	ext=${file##*.}
+
+	case $ext in
+		deb)
+			method=dpkg
+			echo "Will use method $method"
+			name=$(dpkg -f $package Package)
+			echo "We will override name with $name (for easier removal)"
+			;;
+		*)
+			echo "Cannot derive method for package with extension $ext, please be explicit and add it"
+			echo "$usage"
+			exit 2
+			;;
+	esac
+elif [ "$#" -eq 4 ]; then
+	method=${3:? "$usage"}
+	package=${4:? "$usage"}
+fi
+
+case $action in
+	log)
+		cat $logfile
+		exit 0
+		;;
+	*)
+		;;
+esac
+
+sep="\t"
+
+if [ "$action" = "install" ]; then
+
+case $method in
+	dpkg)
+		cmd="sudo dpkg -i $package"
+		time=$(date '+%Y%m%d_%H%M%S_%3N')
+		echo "$time$sep$name$sep$method$sep$package$sep| $cmd" >> $logfile
+		echo "Setup using $method"
+		$cmd
+		;;
+	*)
+		echo "Unknown method"
+		;;
+esac
+
+fi
+
+if [ "$action" = "remove" ]; then
+
+method=$(tac $logfile | awk "\$2==\"$name\" { print \$3; exit }")
+
+case $method in
+	dpkg)
+		cmd="sudo dpkg -r $name"
+		time=$(date '+%Y%m%d_%H%M%S_%3N')
+		package="[removed]"
+		echo "Remove using $method"
+		$cmd
+		echo "$time$sep$name$sep$method$sep$package$sep| $cmd" >> $logfile
+		;;
+	*)
+		echo "Unknown method"
+		;;
+esac
+
+fi

@@ -1,13 +1,18 @@
 #!/bin/sh
 
-usage="$0 subject"
+usage="$0 file.html subject"
+
+ifile=${1:? "$usage"}
+subject=${2:? "$usage"}
 
 mkdir -p tmp
 
-subject=${1:? "$usage"}
+sed -i "s/{{ title }}/$subject/g" $ifile
 
-echo mc campaigns create --subject=''''"$subject"'''' --from-email='anne@crownstone.rocks' --from-name='Crownstone' --html-filename=campaign.html | tee tmp/log.txt
-mc campaigns create --subject=''''"$subject"'''' --from-email='anne@crownstone.rocks' --from-name='Crownstone' --html-filename='mailchimp.html' | tee tmp/log.txt
+echo 'Create campaign online'
+mc campaigns create --subject=''''"$subject"'''' --from-email='anne@crownstone.rocks' --from-name='Crownstone' --html-filename=''''"$ifile"'''' | tee tmp/log.txt
+
+# print campaign id
 
 campaign_id=$(cat tmp/log.txt | grep 'campaign' | grep 'id' | tr -d ' ' | cut -f2 -d'=')
 

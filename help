@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+text=$1
+
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
 txtgrn='\e[0;32m' # Green
@@ -34,32 +36,200 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
-echo "Resize gnome-terminal:\t\tresize -s 50 140"
-echo "Find file with wildcard:\tfind . -name 'test*'"
-echo "Untar --extract --file:\t\ttar xf archive.x.y.z ${txtblu}-C${txtrst} folder"
-echo "Unzip to folder:\t\tunzip archive.zip ${txtblu}-d${txtrst} folder"
-echo "Force argument:\t\t\tinterface=\${1:? \"usage\"}"
-echo "Inline sed:\t\t\tsed -i '/Term/s/^/#/'"
-echo "Process substitution:\t\tmeld <(xxd file1) <(xxd file2) <(xxd file3)"
-echo "Subtree push:\t\t\tgit subtree push --prefix docs/html upstream gh-pages"
-echo "Revert single file:\t\tgit checkout -- src/file.cpp"
-echo "Unstage single file:\t\tgit reset src/file.cpp"
-echo "Diff file:\t\t\tgit diff HEAD^^..HEAD src/file.cpp"
-echo "Make Android screenshot:\tadb shell screencap -p | dos2unix > screen.png"
-echo "Restart unity panel:\t\tkillall unity-panel-service"
-echo "File exists?\t\t\t[ -e \"\$file\" ] && echo \"present\" || echo \"absent\""
-echo "Var set?\t\t\t[ -n \${var+x} ] && echo \"set\" || echo \"unset\""
-echo "Var set and non-empty?\t\t[ -n \"\${var}\" ] && echo \"set and non-empty\" || echo \"unset or empty\""
-echo "Var not set?\t\t\t[ -z \${var+x} ] && echo \"unset\" || echo \"set\""
-echo "Extract path\t\t\t\${VAR%/*}"
-echo "Extract file\t\t\t\${VAR##*/}"
-echo "Unix time to date:\t\tdate --date='@1425908833.293774'"
-echo "Module param values:\t\tsudo grep '' /sys/module/i915/parameters/*"
-echo "Vim: where is option set?\t:verbose set tabstop?"
-echo "Vim: how to remove ^M?\t\t:%s/<Ctrl-V><Ctrl-M>//g (so first type Ctrl-V for ^ sign)"
-echo "Prettify json:\t\t\t< file.json python -m json.tool > pretty.json"
-echo "Resize image:\t\t\tconvert file.png -resize 100x100 file.png"
-echo "List gsettings values:\t\tgsettings range org.gnome.settings-daemon.plugins.power critical-battery-action"
-echo "List gsettings keys:\t\tgsettings list-recursively org.gnome.settings-daemon.plugins.power"
-echo "Deep rsync:\t\t\trsync -avzul --copy-links src dest"
-echo "Find .deb package:\t\tdpkg -S /some/file"
+display() {
+
+	echo "${txtgrn}Command line${txtrst}"
+	echo "Force argument:\t\t\tinterface=\${1:? \"usage\"}"
+	echo "Resize gnome-terminal:\t\tresize -s 50 140"
+	echo "Find file with wildcard:\tfind . -name 'test*'"
+	echo "Untar --extract --file:\t\ttar xf archive.x.y.z ${txtblu}-C${txtrst} directory"
+	echo "Unzip to directory:\t\tunzip archive.zip ${txtblu}-d${txtrst} directory"
+	echo "Zip directory:\t\t\tzip archive.zip ${txtblu}-r${txtrst} directory"
+	echo "Inline sed:\t\t\tsed -i '/Term/s/^/#/'"
+	echo "Process substitution:\t\tmeld <(xxd file1) <(xxd file2) <(xxd file3)"
+	echo "Make Android screenshot:\tadb shell screencap -p | dos2unix > screen.png"
+	echo "Restart unity panel:\t\tkillall unity-panel-service"
+	echo "File exists?\t\t\t[ -e \"\$file\" ] && echo \"present\" || echo \"absent\""
+	echo "Var set?\t\t\t[ -n \${var+x} ] && echo \"set\" || echo \"unset\""
+	echo "Var set and non-empty?\t\t[ -n \"\${var}\" ] && echo \"set and non-empty\" || echo \"unset or empty\""
+	echo "Var not set?\t\t\t[ -z \${var+x} ] && echo \"unset\" || echo \"set\""
+	echo "Var not set or empty?\t\t[! -n \"\${var}\" ] && echo \"unset or empty\" || echo \"set and non-empty\""
+	echo 'Var set only if not set\t\tvar=${var:-default}'
+	echo 'Var equal to value (sh)\t\tif [ "$var" = "value" ]; then'
+	echo "Extract path\t\t\t\${VAR%/*}"
+	echo "Extract file\t\t\t\${VAR##*/}"
+	echo "Extract file without ext\t\${VAR%%.*}"
+	echo "Extract file without one ext\t\${VAR%.*}"
+	echo "Extract extension (.gz)\t\t\${VAR##*.}"
+	echo "Extract extension (.tar.gz)\t\${VAR#*.}"
+	echo "Unix time to date:\t\tdate --date='@1425908833.293774'"
+	echo "Time date time msec\t\tdate '+%Y%m%d_%H%M%S_%3N'"
+	echo "Module param values:\t\tsudo grep '' /sys/module/i915/parameters/*"
+	echo "Prettify json:\t\t\t< file.json python -m json.tool > pretty.json"
+	echo "Prettify json:\t\t\t< file.json jq ."
+	echo "Get json field 'results':\t< file.json jq '.results'"
+	echo "Get json array:\t\t\t< file.json jq '.results[]'"
+	echo "Build json struct:\t\t< file.json jq '.results[] | {address: .address, city: .city}'"
+	echo "Select based on subfield\t< file.json jq '.[] | select(.field == \"text\")'"
+	echo "List gsettings values:\t\tgsettings range org.gnome.settings-daemon.plugins.power critical-battery-action"
+	echo "List gsettings keys:\t\tgsettings list-recursively org.gnome.settings-daemon.plugins.power"
+	echo "Deep rsync:\t\t\trsync -avzul --copy-links src dest"
+	echo "Find .deb package:\t\tdpkg -S /some/file"
+	echo "Sed substitution\t\tsed 's/test=\(.*\)/test=\1/g'"
+	echo "Cat including filename\t\ttail -n +1 directory/*"
+	echo "Copy completions (zsh)\t\tcompdef cmd1=cmd2"
+	echo "Get column 2 and 3\t\tcsvtool col 2-3 input.csv"
+	echo "Sum col 12\t\t\tcat input.csv | csvtool drop 1 - | csvtool col 12 - | paste -s -d+ - | bc"
+	echo "Find files & print full path\tfind . -type f -name \"*.mp4\" -exec readlink -f {} \;"
+	echo "Find process using port\t\tsudo ss -lptn 'sport = :8200'"
+	echo "Find TCP ports in use\t\tss -t -a"
+	echo "Open last screenshot\t\tgimp ~/pictures/*(.om[1])"
+	echo "List packages on size\t\tdpkg-query -W -f='\${Installed-Size;8}\\\t\${Package}\\\t\${status}\\\n' | grep -v 'deinstall' | cut -f1-2 | sort -n"
+	echo "Remove newlines \\\nmatch\t\tsed ':r;\$!{N;br};s/\\\nmatch//g'"
+	echo "Clean up hcidump\t\tsudo hcidump -x -R -t | sed 's/  /\\\n/g' | awk 'BEGIN{RS=\"\\\n\\\n\" ; ORS=\"\";}{ print }'"
+	echo "Remove empty lines\t\t| grep ."
+	echo "Sum numbers per line\t\t| paste -s -d+ - | bc"
+	echo "Drop last line\t\t\tsed '$ d'"
+	echo "Drop last line\t\t\thead -n -1"
+	echo "Sum values in column\t\tcat numbers.txt | jq -s 'add'"
+	echo "Get Google Drive pdf\t\tgetpdf file.gddoc"
+	echo "Use ctags for C++\t\tctags --c++-kinds=+p --fields=+iaS --extra=+q --language-force=c++ -R ."
+	echo 'Specify ctags .h and .c files\tfind . \( -name "*.h" -or -name "*.c" \) -exec ctags {} +'
+	echo 'Merge two lines\t\t\t< file paste - -'
+	echo "Return line following a match\tsed -n '/match/{n;p}'"
+	echo 'List terminal preferences\tgnome-terminal --preferences'
+	echo 'Change color terminal\t\tgnome-terminal --window-with-profile=Light'
+	echo 'Change color terminal\tkitty -o "foreground #000000" -o "background #ffffff"'
+	echo
+	echo "${txtgrn}git${txtrst}"
+	echo "Subtree push:\t\t\tgit subtree push --prefix docs/html upstream gh-pages"
+	echo "Revert single file:\t\tgit checkout -- src/file.cpp"
+	echo "Unstage single file:\t\tgit reset src/file.cpp"
+	echo "Diff file:\t\t\tgit diff HEAD^^..HEAD src/file.cpp"
+	echo "Get folder from branch:\t\tgit checkout master; git checkout branch folder"
+	echo 'Create archive (zip):\t\tgit archive --prefix ${PWD##*/}/ HEAD -o ../${PWD##*/}.zip'
+	echo
+	echo "${txtgrn}over files${txtrst}"
+	echo "Find and grep\t\t\tfind . -name \"*.cpp\" -exec grep ENCYR {} \;"
+	echo "Find and sed\t\t\tfind . -name \"*.cpp\" -exec sed -i 's/ENCYR/ENCRY/g' {} \;"
+	echo
+	echo "${txtgrn}convert${txtrst}"
+	echo "Resize image:\t\t\tconvert ifile -resize 100x100 ofile"
+	echo "Convert *.png -> *.jpg\t\tfor f in *.png; convert \$f -resize 375x667 \"\${f%.*}.jpg\""
+	echo "Convert to color\t\tfor f in *.png; convert \$f -fuzz 40% -fill \"#007cc3\" -opaque black ../blue/\$f"
+	echo "Convert to gray scale\tconvert ifile -set colorspace Gray -separate -average ofile"
+	echo "Convert to particular size\tconvert -define jpeg:extent=500kb ifile ofile"
+	echo "Convert transparent (order!)\tconvert -background none img.svg img.png"
+	echo 'Create movie\t\t\tffmpeg -f image2 -r 6 -pattern_type glob -i "*.png" output.mp4 -pix_fmt yuv420p'
+	echo 'Create gif\t\t\tffmpeg -ss 0:50 -i input.mkv -t 30 -s 480x270 result.gif -hide_banner'
+	echo 'Crop 50px from left and right\tconvert ifile -shave 50x0+50+0 +repage ofile'
+	echo 'Crop bottom 50px\t\tconvert ifile -gravity South -chop 0x50 ofile'
+	echo 'Crop 640x480 with offset\tconvert ifile -crop 640x480+50+100 ofile'
+	echo 'List DPI\t\t\tidentify -format '%x,%y\n' -units PixelsPerInch ifile'
+	echo "Crop circularly step 1\t\tconvert -size 200x200 xc:Black -fill White -draw 'circle 100 100 100 1' -alpha Copy mask.png"
+	echo "Crop circularly step 2\t\tconvert ifile -gravity Center mask.png -compose CopyOpacity -composite -trim ofile"
+	echo "Add color to both sides\t\tconvert ifile -background '#003e52' -gravity center -extent 3200x1800 ofile"
+	echo
+	echo "${txtgrn}pdf${txtrst}"
+	echo 'Reverse order pdf\t\tpdftk ifile cat end-1 output ofile'
+	echo 'Merge odd and even pdf\t\tpdftk A=fileA B=fileB shuffle A B output ofile'
+	echo "View pdf\t\t\tzathura ifile"
+	echo "Revert colors of pdf\t\tzathura: Ctrl+r"
+	echo
+	echo "${txtgrn}vim${txtrst}"
+	echo "Change case\t\t\t~"
+	echo "Record macro, example\t\tqa~wq\t@a"
+	echo "Count words\t\t\tselect block; g Ctrl+g"
+	echo 'Replace word\t\t\t:%s/\<foo\>/bar/g'
+	echo 'Toggle header-source file\t:FSHere'
+	echo 'Toggle header-source file\t:tag header (Ctrl+t to go back)'
+	echo 'Open file\t\t\t:find cs_Error.h'
+	echo 'Go to class\t\t\t:tag ADC'
+	echo 'Go to definition\t\tCtrl+]'
+	echo 'Go back\t\t\t\tCtrl+T (or :pop)'
+	echo 'Show all tags\t\t\tg]'
+	echo 'From "x" to <x>\t\t\ts/"\([^"].*\)./<\1>/g'
+	echo 'Remove trailing whitespace\ts/[ \\t]*$//g'
+	echo 'Sort and make unique\t\t:sort u'
+	echo 'Enhance list\t\t\ts/.*/case &:\\rreturn "&";/g'
+	echo 'Show matched lines:\t\tg/match/'
+	echo 'Remove matched lines:\t\tg/match/d'
+	echo "Copy to system clipboard\t:'<,'>w !cb'"
+	echo "Copy to system clipboard\t\"+y"
+	echo "Copy from system clipboard\t\"+p"
+	echo "Add character ë or â\t\tCtrl+K e: or Ctrl+K a^"
+	echo 'Html URL to markdown\t\t:%s/<a href="\(.*\)">\(.*\)<\/a>/[\2](\1)/'
+	echo 'Html h1 to markdown\t\t:%s/<h1>\(.*\)<\/h1>/# \1/g'
+	echo 'Html h2 to markdown\t\t:%s/<h2>\(.*\)<\/h2>/## \1/g'
+	echo "Where is an option set?\t\t:verbose set tabstop?"
+	echo "How to remove ^M?\t\t:%s/<Ctrl-V><Ctrl-M>//g (so first type Ctrl-V for ^ sign)"
+	echo "Update vim plugins\t\tvim +PluginInstall +qall"
+	echo "Remove vim plugins\t\tvim +PluginClean +qall"
+	echo 'Add to each line\t\tCtrl+V, select lines, Shift+I, Esc'
+	echo "Add to each line\t\tselect lines, :'<,'>norm I// (inserts //)"
+	echo 'Send email\t\t\techo "Body" | mutt -s "Subject" @to -a file'
+	echo
+	echo "${txtgrn}gam${txtrst}"
+	echo "Update gam\t\t\tbash <(curl -s -S -L https://git.io/install-gam) -l"
+	echo "Remove spam filter\t\tgam update group email@crownstone.rocks spam_moderation_level allow"
+	echo "Add user to group\t\tgam update group group@crownstone.rocks add member user member@crownstone.rocks"
+	echo
+	echo "${txtgrn}netrw (vim file explorer)${txtrst}"
+	echo "Create new file\t\t\t%"
+	echo
+	echo "${txtgrn}i3${txtrst}"
+	echo "Exit/quit/logout session\tMeta+Shift+e"
+	echo "Lock screen\t\t\tMeta+Alt+l"
+	echo "Maximize screen\t\t\tMeta+Shift+spacebar"
+	echo "Resize (modal) screen\t\tMeta+r+arrow keys"
+	echo
+	echo "${txtgrn}X${txtrst}"
+	echo "Disable power down\t\t/usr/share/X11/xkb/symbols/inet change POWR"
+	echo
+	echo "${txtgrn}zsh${txtrst}"
+	echo "Tail last file\t\t\ttail *(.om[1])"
+	echo "Cat last .txt file\t\tcat *.txt(.om[1])"
+	echo
+	echo "${txtgrn}tmuxp${txtrst}"
+	echo "Go to window on the left\tCtrl+B <-"
+	echo "Increase width to the right\tCtrl+B Ctrl+->"
+	echo
+	echo "${txtgrn}css${txtrst}"
+	echo "Add padding\t\t\tpadding top right bottom left [px] (clockwise starting with top)"
+	echo
+	echo "${txtgrn}nmcli${txtrst}"
+	echo "Turn on wifi\t\t\tnmcli r wifi on"
+	echo "List all wifi networks\t\tnmcli c"
+	echo "Scan for networks\t\tnmcli d wifi rescan"
+	echo "List wifi networks\t\tnmcli d wifi list"
+	echo "Connect with network\t\tnmcli d wifi connect 'Wifi network' [password]"
+	echo
+	echo "${txtgrn}print${txtrst}"
+	echo "Print label\t\t\tlpr -o landscape -o fit-to-page -P Zebra_Technologies_ZTC_GK420d file"
+	echo
+	echo "${txtgrn}hardware${txtrst}"
+	echo "Set brightness\t\t\techo 70 | sudo tee /sys/class/backlight/intel_backlight/brightness"
+	echo
+	echo "${txtgrn}keychron K6${txtrst}"
+	echo "Change windows\t\t\toption + number"
+	echo "New window\t\t\toption + Enter"
+	echo "Close window (Alt+F4)\t\tcommand (Alt) + fn2 + 4"
+	echo
+	echo "${txtgrn}kitty${txtrst}"
+	echo "Display image\t\t\ticat file.jpg"
+	echo "Display pdf file\t\ttermpdf file.pdf"
+	echo
+	echo "${txtgrn}own scripts${txtrst}"
+	echo "Shortcut\t\t\toption o (restart bluetooth, trigger keyboard, etc.)"
+}
+
+case "$text" in
+	'update')
+		script=$(which $0)
+		vim "$script"
+		exit
+		;;
+	*)
+		display
+		;;
+esac

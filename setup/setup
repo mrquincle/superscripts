@@ -4,6 +4,13 @@ usage="Usage: $0 <action> <name> [method] <package>"
 
 action=${1:? "$usage"}
 
+if [ "$action" = "help" ]; then
+	echo "This is a helper for package installers"
+	echo "Run like e.g. setup install discord [dpkg] discord-0.0.15.deb"
+	echo "In case of a .deb package dpkg is used by default and can be omitted"
+	exit 0
+fi
+
 name=${2:? "$usage"}
 
 mkdir -p ~/.setup
@@ -71,6 +78,7 @@ case $method in
 		time=$(date '+%Y%m%d_%H%M%S_%3N')
 		package="[removed]"
 		echo "Remove using $method"
+		echo "Will use command: $cmd"
 		$cmd
 		echo "$time$sep$name$sep$method$sep$package$sep| $cmd" >> $logfile
 		;;

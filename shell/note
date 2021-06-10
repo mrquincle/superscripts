@@ -4,6 +4,11 @@ text=${1:? "Usage: [@channel] string"}
 
 declare -A options
 
+if [[ ! "$BASH_VERSION" ]]; then
+	echo "Sorry only works for bash shell"
+	return 1
+fi
+
 arg1=$(IFS=" " ; set -- $text ; echo $1)
 token=${arg1:0:1}
 if [ "$token" == "@" ]; then
@@ -23,6 +28,8 @@ options['goto-script']='Go to script path'
 
 opath=$HOME/.notes
 ofile=${channel}.txt
+
+date=$(date +%Y%m%d.%H%M%S)
 
 mkdir -p $opath
 
@@ -54,6 +61,6 @@ case "$text" in
 	cat $opath/$ofile
 	;;
 *)
-	echo "$text" | tee -a $opath/$ofile
+	echo "$date $text" | tee -a $opath/$ofile
 	;;
 esac

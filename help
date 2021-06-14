@@ -191,6 +191,10 @@ display() {
 	echo "Tail last file\t\t\ttail *(.om[1])"
 	echo "Cat last .txt file\t\tcat *.txt(.om[1])"
 	echo
+	echo "${txtgrn}apg${txtrst}"
+	echo "Random MAC address\t\tapg -a 1 -M nl -m12 -N 1 -E ghijklmnopqrstuvwxyz | sed 's/../&:/g;s/:$//'"
+	echo "Random UUID\t\t\tapg -a 1 -M nl -m32 -n 1 -E ghijklmnopqrstuvwxyz | sed -r -e 's/^.{20}/&-/' | sed -r -e 's/^.{16}/&-/' | sed -r -e 's/^.{8}/&-/'"
+	echo
 	echo "${txtgrn}tmuxp${txtrst}"
 	echo "Go to window on the left\tCtrl+B <-"
 	echo "Increase width to the right\tCtrl+B Ctrl+->"

@@ -157,6 +157,7 @@ display() {
 	echo "Copy to system clipboard\t:'<,'>w !cb'"
 	echo "Copy to system clipboard\t\"+y"
 	echo "Copy from system clipboard\t\"+p"
+	echo "Default use system clipboard\tset clipboard=unnamedplus (then just yank)"
 	echo "Add character ë or â\t\tCtrl+K e: or Ctrl+K a^"
 	echo 'Html URL to markdown\t\t:%s/<a href="\(.*\)">\(.*\)<\/a>/[\2](\1)/'
 	echo 'Html h1 to markdown\t\t:%s/<h1>\(.*\)<\/h1>/# \1/g'
@@ -216,6 +217,7 @@ display() {
 	echo "Close window (Alt+F4)\t\tcommand (Alt) + fn2 + 4"
 	echo
 	echo "${txtgrn}kitty${txtrst}"
+	echo "Default copy on select\t\tcopy_on_select yes"
 	echo "Display image\t\t\ticat file.jpg"
 	echo "Display pdf file\t\ttermpdf file.pdf"
 	echo

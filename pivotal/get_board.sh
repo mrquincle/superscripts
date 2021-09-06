@@ -22,35 +22,44 @@ curl -s -X GET -H "X-TrackerToken: $PIVOTAL_TOKEN" "$baseurl/iterations?scope=cu
 baseurl=https://www.pivotaltracker.com/services/v5/my/people?project_id=$PIVOTAL_PROJECT
 curl -s -X GET -H "X-TrackerToken: $PIVOTAL_TOKEN" "$baseurl" -o tmp/result_people.json 
 
-column_width=77
+# We have $COLUMNS in our shell which we want to divide 2:2:2 (hence in 6 parts).
+#echo $COLUMNS
+column_width=$(echo "$COLUMNS/3-11" | bc)
+#echo "Use column width: $column_width"
+column_width_middle=$(echo "$column_width/2-5" | bc)
 
 extract() {
+	header_width=$(echo "$COLUMNS/3-4" | bc)
+	header_width_middle=$(echo "$column_width/2-5" | bc)
 	echo -n "${ocolor}" > $ofile
-	printf '=%.0s' {1..77} >> $ofile
+	printf '=%.0s' $(seq 1 $header_width) >> $ofile
 	echo "${reset}" >> $ofile
-	printf ' %.0s' {1..35} >> $ofile
+	printf ' %.0s' $(seq 1 $header_width_middle) >> $ofile
 	echo "${ocolor}${label}${reset}" >> $ofile
 	echo -n "${ocolor}" >> $ofile
-	printf '=%.0s' {1..77} >> $ofile
+	printf '=%.0s' $(seq 1 $header_width) >> $ofile
 	echo "${reset}" >> $ofile
 	cat tmp/result.json | jq -r "$jq_query" | tr '[]' '{}' >> $ofile
 }
 
-jq_query='.[].stories[] | select((.current_state=="unstarted") or (.current_state=="planned")) | [.name, .owner_ids] | "\(.[0]) \(.[1])"'
+#jq_query='.[].stories[] | select((.current_state=="unstarted") or (.current_state=="planned")) | [.name, .owner_ids] | "\(.[0][0:'"$column_width"']) \(.[1])"'
+
+# Display only first name of list of names 
+jq_query='.[].stories[] | select((.current_state=="unstarted") or (.current_state=="planned")) | [.name, .owner_ids] | "\(.[0][0:'"$column_width"']) [\(.[1][0])]"'
 ofile=tmp/stage1.txt
 ocolor=${red}
 label="To Do"
 
 extract
 
-jq_query='.[].stories[] | select(.current_state=="started") | [.name, .owner_ids] | "\(.[0]) \(.[1])"'
+jq_query='.[].stories[] | select((.current_state=="started")) | [.name, .owner_ids] | "\(.[0][0:'"$column_width"']) [\(.[1][0])]"'
 ofile=tmp/stage2.txt
 ocolor=${blue}
 label="Doing"
 
 extract
 
-jq_query='.[].stories[] | select((.current_state=="delivered") or (.current_state=="accepted")) | [.name, .owner_ids] | "\(.[0]) \(.[1])"'
+jq_query='.[].stories[] | select((.current_state=="delivered") or (.current_state=="accepted")) | [.name, .owner_ids] | "\(.[0][0:'"$column_width"']) [\(.[1][0])]"'
 ofile=tmp/stage3.txt
 ocolor=${green}
 label="Done"
@@ -71,6 +80,10 @@ while read p; do
 done < tmp/lines.txt
 
 cat tmp/result_people.json| jq -r '.[].person | [.id, .name] |  "\(.[0])/\(.[1])"' | cut -f1 -d' ' | tr '[:upper:]' '[:lower:]' > tmp/replace_ids.txt
+
+echo 'null/any' >> tmp/replace_ids.txt
+# Short every name to max 4 characters
+sed -i 's|\(.*/.\{4\}\).*|\1|g' tmp/replace_ids.txt
 
 while read p; do
 	file=$(echo $p | cut -f1 -d':')

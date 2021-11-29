@@ -33,7 +33,12 @@ I am using **i3**.
 
 ### Keyboard shortcuts
 
-Every application on Linux is using something different to close with to me is very annoying. In `~/.config/i3/config` I just make sure `Alt+F4` works:
+Some simple improvements.
+
+#### Alt+F4 to close applications
+
+Every application on Linux is using something different to close the application.
+In `~/.config/i3/config` I make sure `Alt+F4` works in all cases:
 
 ```
 set $alt_key Mod1
@@ -42,15 +47,63 @@ set $alt_key Mod1
 bindsym $alt_key+F4 kill
 ```
 
-On the Keychron I have the tilde is on the Escape key:
+#### Configure ~ key
+
+On the Keychron the tilde is on the Escape key:
 
 ```
 exec_always --no-startup-id xmodmap -e "keycode 9 = Escape asciitilde Escape"
 ```
 
-I also add this to `~/.xmodmap`, still didn't find a way to do this while hotplugging my keyboard **in an easy manner** (and I don't mean `inotifywait` and scripting/hacking around it).
+I also add this to `~/.xmodmap`, but to do this by hotplugging is hard.
 
-Then it is nice to disable the `CAPS LOCK` key so it can be used in discord.
+Using `inotifywait` and scripting/hacking around it is not cool. The easiest way to do this, but it's still not so easy is to create a udev rule, say:
+
+```
+SUBSYSTEM=="input", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="024f", SYMLINK+="keyboard" \
+```
+
+And then a systemd script:
+
+```
+mkdir -p ~/.config/systemd/user
+vim keychron.service
+```
+
+with the following contents:
+
+```
+[Unit]
+Description=Keyboard device
+After=dev-keyboard.device
+BindsTo=dev-keyboard.device
+Requisite=dev-keyboard.device
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/home/anne/.config/i3/scripts/set_keyboard_settings_async.sh
+StandardOutput=journal
+RemainAfterExit=yes
+Type=forking
+
+[Install]
+WantedBy=dev-keyboard.device
+```
+
+You see that a wrapper script is used (it has a delay of a few seconds).
+
+Enable through:
+
+```
+systemctl --user enable keychron
+udevadm control --reload-rules
+```
+
+Just `sudo udevadm trigger` won't work to trigger it, but physically hotplugging does.
+
+#### Disable caps lock (so it can be used in discord)
+
+Then it is nice to "disable" the `CAPS LOCK` key so it can be used in discord.
 
 ```
 exec_always --no-startup-id setxkbmap -option ctrl:nocaps

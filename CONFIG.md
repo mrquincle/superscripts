@@ -162,5 +162,16 @@ EndSection
 
 Note that I also like to be able to click by tapping (rather than having to navigate to a separate button for that). Again, it's the same experience as on a smartphone.
 
+This however will be overwritten when you go from one OS version to the next. Hence, what you can do:
 
+```
+cp /etc/X11/xinit/xinitrc ~/.xinitrc
+vim ~/.xinitrc
+```
 
+And add the lines:
+
+```
+xinput --set-prop 13 'libinput Natural Scrolling Enabled' 1
+xinput --set-prop 13 'libinput Tapping Enabled' 1
+```

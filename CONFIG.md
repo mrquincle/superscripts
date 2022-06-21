@@ -175,3 +175,38 @@ And add the lines:
 xinput --set-prop 13 'libinput Natural Scrolling Enabled' 1
 xinput --set-prop 13 'libinput Tapping Enabled' 1
 ```
+
+## Screenshots
+
+For screenshots I'm using flameshot. This used to have a directory name as argument, but in that case the save to
+clipboard button disappeared. Remove the argument.
+
+```
+bindsym Print exec flameshot gui -p ~/pictures/screenshots
+```
+
+## Pdf viewer
+
+Zathura can open in shell
+
+```
+sudo apt install zathura
+```
+
+To configure as default application:
+
+```
+mimeopen -d some.pdf
+```
+
+## Firefox
+
+Firefox might need some post-install love.
+Run `firefox -safe-mode` to get some more error messages when things go wrong.
+For example, if there is no upload dialog, run the following:
+
+```
+sudo apt install xdg-desktop-portal xdg-desktop-portal-gtk
+```
+
+
